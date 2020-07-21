@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>ROOM 3 Optimized</title>
+    <script src="js/a-frame/aframe.min.js"></script>
+    <script src="js/a-frame/lambert.js"></script>
+    <script src="js/measure_fps.js"></script>
+  </head>
+  <body>
+    <!--MEASURE FPS BUTTON-->
+    <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
+      <button id= "buttonFPS" >MEASURE FPS (60sec)</button>
+      <p id = "averageFPStext"></p>
+    </div>
+    <a-scene stats background="color: #ebf6ff">
+      <a-assets>
+        <!-- Textures-->
+        <img id="front_wall" src="/assets/a-frame/textures/front_wall.png">
+        <img id="floor" src="/assets/a-frame/textures/floor.png">
+        <img id="left_wall" src="/assets/a-frame/textures/left_wall.png">
+        <img id="right_wall" src="/assets/a-frame/textures/right_wall.png">
+        <img id="ceiling" src="/assets/a-frame/textures/ceiling.png">
+        <img id="back_wall" src="/assets/a-frame/textures/back_wall.png">
+        <!-- 3D Models-->
+        <a-asset-item id="lamp" src="/assets/a-frame/scene/lamp.glb"></a-asset-item>
+      </a-assets>
+      <!-- CAMERA -->
+      <a-entity camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 1.6 4.8"></a-entity>
+
+      <!-- LIGHTS -->
+      <!-- Default ambient and 1 point light for objects without baked textures -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity> <!-- AMBIENT -->
+      <a-entity light="type: point; color: #FFF; intensity: 0.3" position = "0 4 0"></a-entity> <!-- POINT -->
+
+      <a-entity gltf-model = "#lamp" position = "10 5 -5" rotation = "0 -90 0"></a-entity> <!--RIGHT WALL-->
+      <a-entity gltf-model = "#lamp" position = "10 5 -15" rotation = "0 -90 0"></a-entity>
+     
+      <a-entity gltf-model = "#lamp" position = "-10 5 -5" rotation = "0 90 0"></a-entity> <!--LEFT WALL-->
+      <a-entity gltf-model = "#lamp" position = "-10 5 -15" rotation = "0 90 0"></a-entity>
+
+      <!-- WALLS -->
+      <a-plane width = "20" height = "30" position = "0 0 -4" rotation = "-90 0 0" material = "shader:flat; src: #floor;"></a-plane> <!-- floor-->
+      <a-plane width = "30" height = "6" position = "-10 3 -4" rotation = "0 90 0" material = "shader:flat;src: #left_wall"></a-plane> <!-- left wall-->
+      <a-plane width = "30" height = "6" position = "10 3 -4" rotation = "0 -90 0" material = "shader:flat; src: #right_wall"></a-plane> <!-- right wall-->
+      <a-plane width = "20" height = "6" position = "0 3 -19" material = "shader:flat; src: #front_wall"></a-plane> <!-- front wall-->
+      <a-plane width = "20" height = "6" position = "0 3 11" rotation = "0 180 0" material = "shader:flat; src: #back_wall"></a-plane> <!-- back wall-->
+      <a-plane width = "20" height = "30" position = "0 6 -4" rotation = "90 0 0" material = "shader:flat; src: #ceiling"></a-plane> <!-- ceiling-->
+
+      <!-- OBJECTS -->
+      <a-box position="5 3 4" rotation="0 90 0" width="0.5" height="6" depth="6" lambert = "color : #474747"></a-box> <!--  1. middle wall -->
+      <a-box position="-6 3 10.75" rotation="0 90 0" width="0.5" height="6" depth="8" lambert = "color : #474747"></a-box> <!--  2. middle wall -->
+      <a-box position="-9.75 3 5.5" rotation="0 0 0" width="0.5" height="6" depth="10" lambert = "color : #474747"></a-box> 
+    
+      <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666"></a-cylinder> <!--  1. pedestal -->
+      <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666"></a-cylinder> <!--  2. pedestal -->
+    </a-scene>
+  </body>
+</html>

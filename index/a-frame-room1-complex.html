@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>ROOM 1 Complex</title>
+    <script src="js/a-frame/aframe.min.js"></script>
+    <script src="js/a-frame/fps_in_VR.js"></script>
+    <script src="js/measure_fps.js"></script>
+  </head>
+  <body>
+    <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
+      <button id= "buttonFPS" >MEASURE FPS (60sec)</button>
+      <p id = "averageFPStext"></p>
+    </div>
+    <a-scene stats background="color: #ebf6ff">
+      <!-- MODEL -->
+      <a-assets>
+        <a-asset-item id="model" src="/assets/a-frame/complex_model.glb"></a-asset-item>
+      </a-assets>
+      <a-entity fps-counter position="2 0.2 -2" scale = "3 3 3"></a-entity>
+      <!-- SCENE -->
+      <a-entity gltf-model="#model" position="0 0.2 -6" 
+        animation="property: rotation; 
+          to: 0 360 0; 
+          dur: 30000; 
+          easing: linear; 
+          loop: true"
+      ></a-entity>
+      <a-box position="0 0 -6" rotation ="0 45 0" height="0.2" depth="5" width="5" color="#27353f"></a-box>
+    </a-scene>
+  </body>
+</html>

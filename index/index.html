@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebVR Optimization Experiments</title>
+    <link rel="stylesheet" type="text/css" href="css/index_page.css">
+  </head>
+  <body>
+  <h1>WebVR Optimization Experiments</h1>
+  <ol>
+    <li>
+      <span><b>ROOM 1: 3D MODEL COMPLEXITY</b><br/>
+      A-frame VR room to measure effect of <b>number of triangles</b> on performance.</span>
+      <ol>
+        <li>
+          <div>
+            <a href="a-frame-room1-complex.html">COMPLEX</a>
+            <span>  75.860 triangles</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <a href="a-frame-room1-optimized.html">OPTIMIZED</a>
+            <span>  862 triangles</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <span><b>ROOM 2: OBJECT COUNT</b><br/>
+      A-frame VR room to measure effect of <b>object count / draw calls</b> on performance.</span>
+      <ol>
+        <li>
+          <div>
+            <a href="a-frame-room2-complex.html">COMPLEX</a>
+            <span>  Scene with 1000 geometries X 588 triangles.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <a href="a-frame-room2-optimized.html">OPTIMIZED</a>
+            <span>  Scene with merged 1 geometry x 588000 triangles.</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <span><b>ROOM 3: LIGHTNING and SHADERS</b><br/>
+        A-frame VR room to measure effect of <b>lightmapping</b> on performance.</span>
+        <ol>
+          <li>
+            <div>
+              <a href="a-frame-room3-complex.html">COMPLEX</a>
+              <span>  Physically based rendering (PBR).</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <a href="a-frame-room3-optimized.html">OPTIMIZED</a>
+              <span>  Lights baked into textures - lightmapping.</span>
+            </div>
+          </li>
+        </ol>
+    </li>
+    <li>
+      <span><b>ROOM 4: LATENCY</b><br/>
+        A-frame VR room to measure effect of <b>latency</b> on UX.</span>
+        <ol>
+          <li>
+            <div>
+              <a href="a-frame-room4.html">COMPLEX</a>
+              <span>  Networked A-frame.</span>
+            </div>
+          </li>
+        </ol>
+    </li>
+    <li>
+      <div>
+        <a href="demo_babylon.html">(Babylon.js</a>
+        <span>Demo of webVR portfolio made with Babylon.js)</span>
+      </div>
+    </li>
+  </ol>
+  </body>
+</html>

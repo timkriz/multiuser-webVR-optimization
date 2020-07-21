@@ -1,0 +1,32 @@
+{
+  "name": "portfolio-webVR",
+  "version": "0.0.1",
+  "description": "Online portfolio for immersive multi-user webVR experiences.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node ./server/app.js"
+  },
+  "keywords": [
+    "3D",
+    "aframe",
+	  "babylonjs",
+    "collaborative",
+    "immersive",
+    "networked",
+    "portfolio",
+    "virtualreality",
+    "vr"
+  ],
+  "author": "Tim Kriz",
+  "license": "ISC",
+  "engines": {
+    "node": ">= 8.10.0",
+    "npm": ">= 4.0.5"
+  },
+  "dependencies": {
+    "buffered-interpolation": "^0.2.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}

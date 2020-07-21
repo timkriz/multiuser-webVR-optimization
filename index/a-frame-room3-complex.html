@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>ROOM 3 Complex</title>
+    <script src="js/a-frame/aframe.min.js"></script>
+    <script src="js/measure_fps.js"></script>
+  </head>
+  <body>
+    <!--MEASURE FPS BUTTON-->
+    <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
+      <button id= "buttonFPS" >MEASURE FPS (60sec)</button>
+      <p id = "averageFPStext"></p>
+    </div>
+    <a-scene stats background="color: #ebf6ff" renderer="physicallyCorrectLights: false;">
+      <a-assets>
+        <!-- 3D Models-->
+        <a-asset-item id="lamp" src="/assets/a-frame/scene/lamp.glb"></a-asset-item>
+      </a-assets>
+      <!-- CAMERA -->
+      <a-entity camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 1.6 4.8"></a-entity>
+      <!-- LIGHTS -->
+      <!-- Default ambient and 5 point lights -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity> <!-- DEAFULT AMBIENT-->
+
+      <a-entity position="0 4 0" light="type: point; color: #FFF; intensity: 0.2; castShadow: true" ></a-entity> <!--CEILING-->
+      <a-cylinder position="0 6 0" height = "0.1" radius = "0.45"></a-cylinder>
+      <a-cylinder position="0 6 0" height = "0.05" radius = "0.5" color="#E0E0E0"></a-cylinder>
+      
+      <a-entity position="9 3 -5" light="type: point; color: #FFF; intensity: 0.3; distance:3" ></a-entity> <!--RIGHT WALL-->
+      <a-entity gltf-model = "#lamp" position = "10 5 -5" rotation = "0 -90 0"></a-entity>
+      <a-entity position="9 3 -15" light="type: point; color: #FFF; intensity: 0.3; distance:3" ></a-entity>
+      <a-entity gltf-model = "#lamp" position = "10 5 -15" rotation = "0 -90 0"></a-entity>
+     
+      <a-entity position="-9 3 -5" light="type: point; color: #FFF; intensity: 0.3; distance:3" ></a-entity> <!--LEFT WALL-->
+      <a-entity gltf-model = "#lamp" position = "-10 5 -5" rotation = "0 90 0"></a-entity>
+      <a-entity position="-9 3 -15" light="type: point; color: #FFF; intensity: 0.3; distance:3" ></a-entity>
+      <a-entity gltf-model = "#lamp" position = "-10 5 -15" rotation = "0 90 0"></a-entity>
+      
+      <!-- WALLS -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="30" shadow="receive: true"></a-plane> <!--Floor-->
+      <a-plane position="0 6 -4" rotation="90 0 0" width="20" height="30" ></a-plane> <!--Ceiling-->
+      <a-plane position="0 3 -19" rotation="0 0 0" width="20" height="6" ></a-plane> <!--Front -->
+      <a-plane position="0 3 11" rotation="180 0 0" width="20" height="6" shadow="receive: true"></a-plane> <!--Back -->
+      <a-plane position="10 3 -4" rotation="0 -90 0" width="30" height="6"></a-plane> <!--Right -->
+      <a-plane position="-10 3 -4" rotation="0 90 0" width="30" height="6"></a-plane> <!--Left -->
+
+      <!-- OBJECTS -->
+      <a-box position="5 3 4" rotation="0 90 0" width="0.5" height="6" depth="6" color="#474747" material= "shader: standard" shadow="cast: true"></a-box> <!--  1. middle wall -->
+      <a-box position="-6 3 10.75" rotation="0 90 0" width="0.5" height="6" depth="8" color="#474747" material= "shader: standard" shadow="cast: true"></a-box> <!--  2. middle wall -->
+      <a-box position="-9.75 3 5.5" rotation="0 0 0" width="0.5" height="6" depth="10" color="#474747" material= "shader: standard" shadow="cast: true"></a-box> 
+    
+      <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666" material= "shader: standard" shadow="cast: true"></a-cylinder> <!--  1. pedestal -->
+      <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666" material= "shader: standard" shadow="cast: true"></a-cylinder> <!--  2. pedestal -->
+    </a-scene>
+  </body>
+</html>
