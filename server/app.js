@@ -12,7 +12,7 @@ http.listen(3000 () => {
 });
 */
 
-process.title = "webvr-optimization-experiments";
+process.title = "multiuser-webVR-optimization";
 const port = process.env.PORT || 8080;
 
 const app = express();
