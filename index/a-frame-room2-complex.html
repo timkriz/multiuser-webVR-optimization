@@ -2,9 +2,9 @@
 <html>
   <head>
 	<title>ROOM 2 Complex</title>
-	<script src="js/a-frame/aframe.min.js"></script> 
-	<script src="https://rawgithub.com/mrdoob/three.js/r104/examples/js/utils/BufferGeometryUtils.js"></script>
-    <script src="js/measure_fps.js"></script>
+	<script src="js/aframe.min.js"></script> <!-- A - frame -->
+    <script src="js/fps_in_VR.js"></script> <!-- Show fps also in VR mode -->
+  	<script src="js/measure_fps.js"></script> <!-- Script for measuring average FPS -->
   </head>
   <body>
 	<!--MEASURE FPS BUTTON-->
@@ -21,8 +21,6 @@
 				for ( var i = 0; i < 1000; i ++ ) {
 					// Create new THREE.Geometry each time
 					var geometry = new THREE.BoxBufferGeometry( 0.1, 0.1, 0.1 );
-					/*var geometryTHREE = new THREE.Geometry().fromBufferGeometry( geo );
-					geometryTHREE.scale(0.3, 0.1, 0.2);*/
 					geometry.rotateY(Math.random()*Math.PI*2);
 					geometry.applyMatrix( new THREE.Matrix4().makeTranslation(generateRand(-2, 2), generateRand(0, 4), generateRand(-3, -7)));
 					
@@ -40,14 +38,12 @@
 		}
 	</script>
 	<a-scene stats background="color: #ebf6ff">
-		<!-- MODEL CACHE-->
-		<a-assets>
-		<a-asset-item id="3Dmodel" src="/assets/a-frame/brick.glb"></a-asset-item>
-		</a-assets>
 		<!-- CAMERA AND LIGHTS -->
 		<a-entity camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 1.6 0"></a-entity>
 		<!-- GEOMETRIES-->
 		<a-entity geometries></a-entity>
+		<!-- SHOW FPS IN VR MODE -->
+		<a-entity fps-counter position="2 0.2 -2" scale = "3 3 3"></a-entity>
 	</a-scene>
   </body>
 </html>

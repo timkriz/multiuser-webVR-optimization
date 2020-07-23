@@ -2,9 +2,9 @@
 <html>
   <head>
   <title>ROOM 1 Complex</title>
-    <script src="js/a-frame/aframe.min.js"></script>
-    <script src="js/a-frame/fps_in_VR.js"></script>
-    <script src="js/measure_fps.js"></script>
+    <script src="js/aframe.min.js"></script> <!-- A - frame -->
+    <script src="js/fps_in_VR.js"></script> <!-- Show fps also in VR mode -->
+    <script src="js/measure_fps.js"></script> <!-- Script for measuring average FPS -->
   </head>
   <body>
     <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
@@ -14,7 +14,7 @@
     <a-scene stats background="color: #ebf6ff">
       <!-- MODEL -->
       <a-assets>
-        <a-asset-item id="model" src="/assets/a-frame/complex_model.glb"></a-asset-item>
+        <a-asset-item id="model" src="/assets/a-frame/models/room_1/complex_model.glb"></a-asset-item>
       </a-assets>
       <a-entity fps-counter position="2 0.2 -2" scale = "3 3 3"></a-entity>
       <!-- SCENE -->

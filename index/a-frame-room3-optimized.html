@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<title>ROOM 3 Optimized</title>
-    <script src="js/a-frame/aframe.min.js"></script>
-    <script src="js/a-frame/lambert.js"></script>
-    <script src="js/measure_fps.js"></script>
+	  <title>ROOM 3 Optimized</title>
+    <script src="js/aframe.min.js"></script> <!-- A - frame -->
+  	<script src="js/measure_fps.js"></script> <!-- Script for measuring average FPS -->
+    <script src="js/components/lambert.js"></script> <!-- Lambet material component -->
   </head>
   <body>
     <!--MEASURE FPS BUTTON-->
@@ -28,7 +28,7 @@
       <a-entity camera="active: true" look-controls wasd-controls="acceleration: 150" position="0 1.6 4.8"></a-entity>
 
       <!-- LIGHTS -->
-      <!-- Default ambient and 1 point light for objects without baked textures -->
+      <!-- Default ambient and 1 point light for objects without baked lights in textures. -->
       <a-entity light="type: ambient; color: #BBB"></a-entity> <!-- AMBIENT -->
       <a-entity light="type: point; color: #FFF; intensity: 0.3" position = "0 4 0"></a-entity> <!-- POINT -->
 

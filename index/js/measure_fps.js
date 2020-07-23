@@ -5,7 +5,7 @@ javascript:(function() {
   var script = document.createElement('script');
   script.onload = function() {
     var stats = new Stats();
-    //document.body.appendChild(stats.dom); // STATS.JS WIDGET
+    //document.body.appendChild(stats.dom); // remove STATS.JS WIDGET
     requestAnimationFrame(function loop() {
       stats.update();
       requestAnimationFrame(loop);
@@ -17,6 +17,6 @@ javascript:(function() {
       else measureFPSswitch = true;
     }
   };
-  script.src = 'js/a-frame/stats.js';
+  script.src = 'js/stats.js';
   document.head.appendChild(script);
   })()

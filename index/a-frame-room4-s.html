@@ -1,0 +1,194 @@
+<html>
+  <head>
+    <title>ROOM 4 Network Websockets</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> <!-- Networking sockets.io-->
+    
+    <script src="/js/aframe.min.js"></script> <!-- A-frame -->
+    <script src ="/js/networked-aframe.js"></script> <!-- Networked A-frame-->
+    <script src = "/js/components/collision.js"></script> <!-- Collision -->
+    <script src = "/js/components/interactions.js"></script> <!-- Interactions, mostly gaze -->
+    <script src = "/js/components/lambert.js"></script> <!-- Optimized shaders -->
+    <script src = "/js/components/hand.component.js"></script> 
+    <script src ="/js/components/remove-in-seconds.component.js"></script>
+    <script src ="/js/components/random_color.component.js"></script>
+  </head>
+  <body>
+    <!--MEASURE NETWORK BUTTON-->
+    <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
+      <button id= "buttonMeasureNetwork" >Print entity creation time in console</button>
+      <p id = "entity_creation_time"></p>
+      <p id = "entity_creation_time_on_second_end"></p>
+    </div>
+    <a-scene stats background="color: #ebf6ff" networked-scene="
+    room: dev;
+    debug: true;
+    adapter: socketio;
+    ">  
+      <a-assets>
+        <!-- Textures-->
+        <img id="front_wall" src="/assets/a-frame/textures/front_wall.png">
+        <img id="floor" src="/assets/a-frame/textures/floor.png">
+        <img id="left_wall" src="/assets/a-frame/textures/left_wall.png">
+        <img id="right_wall" src="/assets/a-frame/textures/right_wall.png">
+        <img id="ceiling" src="/assets/a-frame/textures/ceiling.png">
+        <img id="back_wall" src="/assets/a-frame/textures/back_wall.png">
+
+        <!-- Templates -->
+        <a-asset-item id="avatar_body" src="/assets/a-frame/models/avatar_body.glb"></a-asset-item>
+        <a-asset-item id="avatar_hand" src="/assets/a-frame/models/avatar_hand.glb"></a-asset-item>
+        <!-- Avatar Hand -->
+        <template id="hand-template">
+          <a-entity gltf-model = "#avatar_hand"></a-entity>
+        </template>
+        <!-- Avatar -->
+        <template id="avatar-template">
+          <a-entity class="avatar">
+            <a-sphere class="head"
+              color="#ffffff"
+              scale="0.38 0.29 0.3"
+              position = "0 0.04 0"
+            ></a-sphere>
+            <a-entity class ="body"
+            gltf-model = "#avatar_body" position = "0 -0.88 0"></a-entity>
+            <a-entity class="face"
+              position="0 0.05 0"
+            >
+              <a-sphere class="eye"
+                color="#efefef"
+                position="0.16 0 -0.2"
+                scale="0.12 0.12 0.12"
+              >
+                <a-sphere class="pupil"
+                  color="#000"
+                  position="0 0 -1"
+                  scale="0.2 0.2 0.2"
+                ></a-sphere>
+              </a-sphere>
+              <a-sphere class="eye"
+                color="#efefef"
+                position="-0.16 0 -0.2"
+                scale="0.12 0.12 0.12"
+              >
+                <a-sphere class="pupil"
+                  color="#000"
+                  position="0 0 -1"
+                  scale="0.2 0.2 0.2"
+                ></a-sphere>
+              </a-sphere>
+            </a-entity>
+          </a-entity>
+        </template>
+        <!-- /Templates -->
+        <!-- LAMP  MODEL-->
+        <a-asset-item id="lamp" src="/assets/a-frame/scene/lamp.glb"></a-asset-item> 
+      </a-assets>
+
+      <!-- AVATAR -->
+      <a-entity id="player"
+      networked="template:#avatar-template;attachTemplateToLocal:false;"
+      camera
+      position="0 1.6 0"
+      collision-body
+      wasd-controls="acceleration: 150" look-controls
+      hand="handTemplate:#hand-template"
+      >
+        <a-sphere class="head"
+          visible="false"
+          random-color
+        ></a-sphere>
+        <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.013"
+                  material="color: black; shader: flat; opacity: 0.2">
+        </a-cursor>
+      </a-entity>
+
+      <!-- LIGHTS -->
+      <!-- Default ambient and 1 point light for objects without baked textures -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity> <!-- AMBIENT -->
+      <a-entity light="type: point; color: #FFF; intensity: 0.3" position = "0 4 0"></a-entity> <!-- POINT -->
+
+      <a-entity gltf-model = "#lamp" position = "10 5 -5" rotation = "0 -90 0"></a-entity> <!--RIGHT WALL-->
+      <a-entity gltf-model = "#lamp" position = "10 5 -15" rotation = "0 -90 0"></a-entity>
+     
+      <a-entity gltf-model = "#lamp" position = "-10 5 -5" rotation = "0 90 0"></a-entity> <!--LEFT WALL-->
+      <a-entity gltf-model = "#lamp" position = "-10 5 -15" rotation = "0 90 0"></a-entity>
+
+      <!-- WALLS -->
+      <a-plane width = "20" height = "30" position = "0 0 -4" rotation = "-90 0 0" material = "shader:flat; src: #floor;"></a-plane> <!-- floor-->
+      <a-plane width = "30" height = "6" position = "-10 3 -4" rotation = "0 90 0" material = "shader:flat;src: #left_wall"></a-plane> <!-- left wall-->
+      <a-plane width = "30" height = "6" position = "10 3 -4" rotation = "0 -90 0" material = "shader:flat; src: #right_wall"></a-plane> <!-- right wall-->
+      <a-plane width = "20" height = "6" position = "0 3 -19" material = "shader:flat; src: #front_wall"></a-plane> <!-- front wall-->
+      <a-plane width = "20" height = "30" position = "0 6 -4" rotation = "90 0 0" material = "shader:flat; src: #ceiling"></a-plane> <!-- ceiling-->
+      <a-plane width = "20" height = "6" position = "0 3 11" rotation = "0 180 0" material = "shader:flat; src: #back_wall"></a-plane> <!-- back wall-->
+      <a-plane width = "20" height = "30" position = "0 6 -4" rotation = "90 0 0" material = "shader:flat; src: #ceiling"></a-plane> <!-- ceiling-->
+
+      <!-- OBJECTS -->
+      <a-box static-body position="5 3 4" rotation="0 90 0" width="0.5" height="6" depth="6" color="#474747" ></a-box> <!--  1. middle wall -->
+      <a-box static-body position="-6 3 10.75" rotation="0 90 0" width="0.5" height="6" depth="8" color="#474747"></a-box> <!--  2. middle wall -->
+      <a-box static-body position="-9.75 3 5.5" rotation="0 0 0" width="0.5" height="6" depth="10" color="#474747"></a-box> 
+    
+      <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666"></a-cylinder> <!--  1. pedestal -->
+      <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666"></a-cylinder> <!--  2. pedestal -->
+
+      <!-- TELEPORT POINTS -->
+      <a-box teleport_point position = "0 0.001 0" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.3" rotation = "-90 0 0" radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "0 0.001 -5" material = "opacity: 0">
+       <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+       </a-box>
+      <a-box teleport_point position = "5 0.001 0"  material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "-5 0.001 5" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "3 0.001 7" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "-7.5 0.001 -3.5" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "6.5 0.001 -8" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "1 0.001 -11.5" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0"  radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+      <a-box teleport_point position = "-6 0.001 -15" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" rotation = "-90 0 0" radius-outer="0.5" material = "opacity: 0.5"></a-ring>
+        </a-box>
+        
+    </a-scene>
+    <script>
+      // On mobile remove elements that are resource heavy
+      var isMobile = AFRAME.utils.device.isMobile();
+
+      if (isMobile) {
+        var particles = document.getElementById('particles');
+        particles.parentNode.removeChild(particles);
+      }
+    </script>
+
+    <script>
+      // Define custom schema for syncing avatar color, set by random-color
+      NAF.schemas.add({
+        template: '#avatar-template',
+        components: [
+          'position',
+          'rotation',
+          {
+            selector: '.head',
+            component: 'material',
+            property: 'color'
+          }
+        ]
+      });
+
+      // Called by Networked-Aframe when connected to server
+      function onConnect () {
+        console.log("onConnect", new Date());
+      }
+    </script>
+    <script src ="/js/measure_network.js"></script>
+  </body>
+</html>

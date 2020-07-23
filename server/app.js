@@ -37,8 +37,10 @@ const webServer = https.createServer({
   passphrase: 'random'
 }, app);
 const io = require("socket.io")(webServer);
+
 const rooms = {};
 
+// Making a connection 
 io.on("connection", socket => {
   console.log("user connected", socket.id);
 
@@ -69,17 +71,7 @@ io.on("connection", socket => {
   socket.on("send", data => {
     io.to(data.to).emit("send", data);
   });
-/*******/
-  socket.on( 'ping', function () {
-	console.log("ponging");
-    socket.emit('pong');
-	} );
-/*
-	 socket.on('latency', function (fn) {
-            fn();
-        }); */
-  
-  
+
   socket.on("broadcast", data => {
     socket.to(curRoom).broadcast.emit("broadcast", data);
   });
