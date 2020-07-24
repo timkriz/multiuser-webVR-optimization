@@ -1,4 +1,4 @@
-var global_variable_network_created_entity = 0;
+var global_variable_network_changed_position_time = 0;
 ! function(e) {
     var t = {};
 
@@ -331,16 +331,6 @@ var global_variable_network_created_entity = 0;
                     if (t && !this.hasEntity(t)) this.childCache.addChild(t, e);
                     else {
                         var i = this.createRemoteEntity(e);
-/**** CATCH HERE **********************************************************
-*************************************************************************/
-                        /*FILTER OUT TEMPLATE*/
-                        if(e.template == "#hand-template"){
-                            var time_recieved = Date.now();
-                            console.log("Time of recieving first update from entity:", time_recieved);
-                            NAF.log.write("This is your entity: ", e);
-                            NAF.log.write("Time of recieving first update from entity: ", time_recieved);
-                            global_variable_network_created_entity = time_recieved;
-                        }
                         this.createAndAppendChildren(n, i), this.addEntityToPage(i, t)
                     }
                 }
@@ -1455,16 +1445,12 @@ var global_variable_network_created_entity = 0;
         tick: function(e, t) {
             if (!this.isMine() && NAF.options.useLerp)
                 for (var n = 0; n < this.bufferInfos.length; n++) {
-                    //NAF.log.write(this.bufferInfos[n]);
                     var i = this.bufferInfos[n],
                         o = i.buffer,
                         s = i.object3D,
                         r = i.componentNames;
-                    //NAF.log.write(i);
-                    //if(i.object3D.name == "jojo") NAF.log.write(this.bufferInfos[n]);
                     o.update(t), r.includes("position") && s.position.copy(o.getPosition()), r.includes("rotation") && s.quaternion.copy(o.getQuaternion()), r.includes("scale") && s.scale.copy(o.getScale())
                 }
-
         },
         syncAll: function(e, t) {
             if (this.canSync()) {
@@ -1544,6 +1530,17 @@ var global_variable_network_created_entity = 0;
             }
         },
         updateNetworkedComponent: function(e, t, n, i) {
+
+/************* UPDATED COMPONENT, ADDED   **********/
+
+            if(t == "position"){
+                var time_recieved = Date.now();
+                console.log("Time of recieving position update from networked entity:", time_recieved);
+                NAF.log.write("Time of recieving position update from networked entity: ", time_recieved);
+                global_variable_network_changed_position_time = time_recieved;
+            }
+
+/****************************************************/
             if (NAF.options.useLerp && r.includes(t)) {
                 for (var a, c = 0, u = this.bufferInfos.length; c < u; c++) {
                     var l = this.bufferInfos[c];

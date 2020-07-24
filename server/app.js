@@ -73,7 +73,10 @@ io.on("connection", socket => {
   });
 
   socket.on("broadcast", data => {
-    socket.to(curRoom).broadcast.emit("broadcast", data);
+    /**SIMULATING SERVER LATENCY **/
+    setTimeout(() => {
+      socket.to(curRoom).broadcast.emit("broadcast", data);
+    }, 2000);
   });
 
   socket.on("disconnect", () => {

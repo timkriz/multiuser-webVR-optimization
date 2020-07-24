@@ -8,16 +8,14 @@
     <script src = "/js/components/collision.js"></script> <!-- Collision -->
     <script src = "/js/components/interactions.js"></script> <!-- Interactions, mostly gaze -->
     <script src = "/js/components/lambert.js"></script> <!-- Optimized shaders -->
-    <script src = "/js/components/hand.component.js"></script> 
-    <script src ="/js/components/remove-in-seconds.component.js"></script>
     <script src ="/js/components/random_color.component.js"></script>
   </head>
   <body>
     <!--MEASURE NETWORK BUTTON-->
-    <div style= "position:fixed; z-index: 10; bottom:0; margin: 10px; font-family: Helvetica,Arial,sans-serif">
+    <div style= "position:fixed; z-index: 10; bottom:20; margin: 10px; font-family: Helvetica,Arial,sans-serif">
       <button id= "buttonMeasureNetwork" >Print entity creation time in console</button>
-      <p id = "entity_creation_time"></p>
-      <p id = "entity_creation_time_on_second_end"></p>
+      <p id = "position_update_time"></p>
+      <p id = "position_update_time_on_second_end"></p>
     </div>
     <a-scene stats background="color: #ebf6ff" networked-scene="
     room: dev;
@@ -35,11 +33,6 @@
 
         <!-- Templates -->
         <a-asset-item id="avatar_body" src="/assets/a-frame/models/avatar_body.glb"></a-asset-item>
-        <a-asset-item id="avatar_hand" src="/assets/a-frame/models/avatar_hand.glb"></a-asset-item>
-        <!-- Avatar Hand -->
-        <template id="hand-template">
-          <a-entity gltf-model = "#avatar_hand"></a-entity>
-        </template>
         <!-- Avatar -->
         <template id="avatar-template">
           <a-entity class="avatar">
@@ -90,14 +83,14 @@
       position="0 1.6 0"
       collision-body
       wasd-controls="acceleration: 150" look-controls
-      hand="handTemplate:#hand-template"
       >
         <a-sphere class="head"
           visible="false"
           random-color
         ></a-sphere>
         <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.013"
-                  material="color: black; shader: flat; opacity: 0.2">
+                  material="color: black; shader: flat; opacity: 0.2"
+                  fuse = "false">
         </a-cursor>
       </a-entity>
 

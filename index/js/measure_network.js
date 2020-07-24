@@ -1,11 +1,11 @@
 var button = document.getElementById("buttonMeasureNetwork");
-document.getElementById("entity_creation_time").innerHTML = "You created entity at: ";
-document.getElementById("entity_creation_time_on_second_end").innerHTML = "Entity created by someone else was created on your end at: ";
+document.getElementById("position_update_time").innerHTML = "You changed position at: ";
+document.getElementById("position_update_time_on_second_end").innerHTML = "Another entity changed position at: ";
 button.onclick = function(){
-    console.log("Entity created by someone else was created on your end at: ", global_variable_network_created_entity);
+    console.log("Another entity changed position at: ", global_variable_network_changed_position_time);
 }
 setInterval(function(){ 
    document
-    .getElementById("entity_creation_time_on_second_end")
-    .innerHTML = "Entity created by someone else was created on your end at: " + global_variable_network_created_entity; 
+    .getElementById("position_update_time_on_second_end")
+    .innerHTML = "Another entity changed position at: " + global_variable_network_changed_position_time; 
 }, 1000);
