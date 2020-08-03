@@ -1,4 +1,4 @@
-AFRAME.registerComponent("random-color", {
+AFRAME.registerComponent("random-color-avatar", {
     update: function() {
         var colors = [ "AED6D6", "C2ADBB", "FDD79B", "98CAEB", "FFBDAE", "C7D1CD", "E1DFE1", "D6FFED", "FCD9E8", "EFF2C0", "E0E0E1", "DCE5C8", "D8DDE9"];
         var t = this.data,

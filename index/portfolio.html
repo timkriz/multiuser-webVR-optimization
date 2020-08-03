@@ -1,25 +1,26 @@
 <html>
   <head>
-    <title>ROOM 4 Network</title>
-    <meta name="description" content="Networked-Aframe">
-	  <script src="js/a-frame/aframe.min.js"></script> 
-    <script src="js/a-frame/lambert.js"></script> <!-- Optimizing shaders -->
+    <title>Final portfolio</title>
+    <meta name="description" content="WebVR portfolio">
+	  <script src="js/aframe.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> <!-- Network -->
-    <!--<script src="/build.js"></script> Network -->
     <script>window.NAF || document.write('<script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js">\x3C/script>')</script>  <!-- Network -->
     
     <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
 
-    <script src = "/js/a-frame/collision.js"></script> <!-- Collision -->
-    <script src = "/js/a-frame/interactions.js"></script> <!-- Interactions, mostly gaze -->
-
+    <script src = "/js/components/collision.js"></script> <!-- Collision -->
+    <script src = "/js/components/interactions.js"></script> <!-- Interactions, mostly gaze -->
+    <script src="js/components/lambert.js"></script> <!-- Optimizing shaders -->
+    <script src ="/js/components/random_color.component.js"></script>
   </head>
   <body>
     <a-scene stats background="color: #ebf6ff" networked-scene="
     room: dev;
     debug: true;
-    adapter: webrtc;
-    ">  
+    adapter: socketio;
+    "
+    loading-screen="dotsColor: white; backgroundColor: black"
+    >  
       <a-assets>
         <!-- Textures-->
         <img id="front_wall" src="/assets/a-frame/textures/front_wall.png">
@@ -28,7 +29,6 @@
         <img id="right_wall" src="/assets/a-frame/textures/right_wall.png">
         <img id="ceiling" src="/assets/a-frame/textures/ceiling.png">
         <img id="back_wall" src="/assets/a-frame/textures/back_wall.png">
-
         <!-- Templates -->
         <a-asset-item id="avatar_body" src="/assets/a-frame/models/avatar_body.glb"></a-asset-item>
         <!-- Avatar -->
@@ -74,6 +74,7 @@
         <a-asset-item id="lamp" src="/assets/a-frame/scene/lamp.glb"></a-asset-item> <!-- LAMP  MODEL-->
         <a-asset-item id="model1" src="/assets/a-frame/models/model1_complex.glb"></a-asset-item>
         <a-asset-item id="model2" src="/assets/a-frame/models/model2.glb"></a-asset-item>
+        <a-asset-item id="metal" src="/assets/a-frame/models/perforated_metal.glb"></a-asset-item>
       </a-assets>
 
       <!-- AVATAR -->
@@ -86,10 +87,12 @@
       >
         <a-sphere class="head"
           visible="false"
-          random-color
+          random-color-avatar
         ></a-sphere>
         <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.013"
-                  material="color: black; shader: flat; opacity: 0.2">
+                  material="color: black; shader: flat; opacity: 0.2"
+                  fuse = "true"
+                  fuseTimeout = "3000">
         </a-cursor>
       </a-entity>
 
@@ -118,7 +121,10 @@
       <a-box static-body position="-6 3 10.75" rotation="0 90 0" width="0.5" height="6" depth="8" color="#474747"></a-box> <!--  2. middle wall -->
       <a-box static-body position="-9.75 3 5.5" rotation="0 0 0" width="0.5" height="6" depth="10" color="#474747"></a-box> 
     
-      <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666">
+      <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666" model2_interaction>
+        <a-entity id = "additional_info_model2" text="value: 
+        RELIEFNA UMESTITEV / GORICKO; color:black; font: dejavu; width:2;wrapCount:20; letterSpacing: 3" 
+        rotation = "0 -45 0" position = "0 2 0" visible= "false"></a-entity>
         <a-entity gltf-model = "#model2" position = "0 .7 0" scale = "1.2 1.2 1.2"
         animation="property: rotation; 
         to: 0 360 0; 
@@ -128,8 +134,11 @@
         <a-entity light = "type: spot; distance: 5; angle:70; intensity: 2" position = "0 3 0" rotation = "-90 90 0S"></a-entity>
       </a-cylinder> <!--  1. pedestal -->
       
-      <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666">
-        <a-entity gltf-model = "#model1" position = "0 .2 0" scale = "0.6 0.6 0.6"
+      <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666" model1_interaction>
+        <a-entity id = "additional_info_model1" text="value: 
+        PROIZVODNI CENTER; color:black; font: dejavu; width:2;wrapCount:20; letterSpacing: 3" 
+        rotation = "0 90 0" position = "0 1 0" visible= "false"></a-entity>
+        <a-entity gltf-model = "#model1" position = "0 .2 0" scale = "0.6 0.6 0.6"  
         animation="property: rotation; 
         to: 0 360 0; 
         dur: 50000; 
@@ -137,6 +146,147 @@
         loop: true"></a-entity>
         <a-entity light = "type: spot; distance: 3; angle:70; intensity: 4" position = "0 2 0" rotation = "-90 90 0S"></a-entity>
       </a-cylinder> <!--  2. pedestal -->
+
+      <!-- WALL IMAGES -->
+      <a-image src="/assets/a-frame/images/projekt_ljudske_sivalnice_objekti_2.jpg" 
+      width="3.8" height="2.1" rotation = "0 90 0" position = "-9.9 2.5 -5"></a-image>
+      <a-entity text="value: LJUDSKE SIVALNICE\n
+      Avtorji projekta: Blaz Jagarinec, 5. letnik\n
+      Mentorji: prof. Vasa Perovic, asist. Anja Vidic, t.s. Jure Grohar\n
+      ; color:black; font: dejavu; width:3" 
+      rotation = "0 90 0" position = "-9.9 3 -1.5"></a-entity>
+
+      <a-image src="/assets/a-frame/images/projekt_ljudske_sivalnice_fasade_6.jpg" 
+      width="2.6" height="3" rotation = "0 90 0" position = "-9.9 2.5 -15" opacity = "0.9"></a-image>
+      <a-entity text="value: 
+      Vse zivljenje sem gledal in zivel na podeželju. Projekt je raziskava arhitekturnih vernakularjev. Ljudske sivalnice so socialno-ekonomski koncept, ki ponuja nove možnosti za vaske gospodinje. Le te so prepoznane kot ogrozena druzbena skupina (po RC Murska Sobota).S poudarkom na razvoj pomurske regije (in posledice nekdanje proizvodnje Mura) - je to modna znamka, ki zenskam zagotavlja podporo, z moznostjo zaposlitve v oblacilni industriji in jim pomaga pri financni neodvisnosti.
+      ; color:black; font: dejavu; width:2; letterSpacing: 3" 
+      rotation = "0 90 0" position = "-9.9 3 -12"></a-entity>
+      <a-image src="/assets/a-frame/images/projekt_ljudske_sivalnice_ideja prenove_5.jpg" 
+      width="2.6" height="3" position = "-8 2.5 -18.9" opacity = "0.9"></a-image>
+      <a-image src="/assets/a-frame/images/projekt_ljudske_sivalnice_prilagoditev objektov_8.jpg" 
+      width="2.6" height="3" position = "-5 2.5 -18.9" opacity = "0.9"></a-image>
+      <a-entity text="value: 
+      Kaksen doprinos nosijo okoliske kmetije? Mednarodne znamke vlagajo vse vec v lokalno pridelavo, zato kmetje z ovcerejo za volno, pridelavo lanu in predelavo celuloze iz nasadov bukev, material spremenijo do vlaken v susilnici in proizvodnem centru.; 
+      color:black; font: dejavu; width:5.5; wrapCount:110, letterSpacing: 3" 
+      position = "-6.5 0.5 -18.9"></a-entity>
+
+      <a-image src="/assets/a-frame/images/tloris1.png" 
+      width="1.5" height="1.5" rotation = "0 -90 0" position = "9.9 2.5 1.4"></a-image>
+      <a-image src="/assets/a-frame/images/tloris2.png" 
+      width="1.5" height="1.5" rotation = "0 -90 0" position = "9.9 3 -0.2"></a-image>
+      <a-image src="/assets/a-frame/images/tloris3.png" 
+      width="1.5" height="1.5" rotation = "0 -90 0" position = "9.9 1.4 -0.2"></a-image>
+      <a-image src="/assets/a-frame/images/tloris4.png" 
+      width="1.5" height="1.5" rotation = "0 -90 0" position = "9.9 4.1 1.4"></a-image>
+      <a-entity text="value: 
+      Plecnikov Park, Ljubljana, September 2017 (light installation in collaboration between Lighting Guerrilla and the Faculty of Architecture) ;
+      color:black; font: dejavu; width:1.7; wrapCount:30; letterSpacing: 3; opacity: 2" 
+      rotation = "0 -90 0" position = "9.9 3.7 -2"></a-entity>
+      <a-entity text="value: 
+      The aim of the following introduction is to illustrate fundamental relation between human and space. The above mentioned is the basis of further development of my thesis which stems from gradually articulating the sequences of two relations of being. 
+      Following Marx's hypothesis, the subject is and acts primarily practically, which means in accordance with conscious and rational action being the core of transforming society and his own self. ;
+      color:black; font: dejavu; width:1.7; wrapCount:30; letterSpacing: 3" 
+      rotation = "0 -90 0" position = "9.9 2 -2"></a-entity>
+
+      <a-image src="/assets/a-frame/images/projekt_ljudske_sivalnice_taverna_4.jpg" 
+      width="5" height="2.6" rotation = "0 -90 0" position = "9.9 2.8 -15"></a-image>
+      <a-entity text="value: 
+      Seminar: Perovic, Lokacija projekta: Goricko, Krovna tema: PRILZNOSTI PODEZELJA; KljuCne besede: revitalizacija/reanimacija podeželja, nove ruralne tipologije, vas, trg;
+      color:black; font: dejavu; width:1.7; wrapCount:30; letterSpacing: 3; opacity: 2" 
+      position = "-2 3 -18.9"></a-entity>
+      <a-entity text="value: 
+      Podjetje je  vertikalno integrirano in se drzi strogih trajnostnih praks pri obiranju, predelavi in uporabi regeneriranih vlaken. Od kmetovanja do proizvodnje je z etiCno in trajnostno modo cilj doseci uspeh za regijo in premik za brezposelno, a specializirano skupino.;
+      color:black; font: dejavu; width:1.7; wrapCount:30; letterSpacing: 3" 
+      position = "-2 2 -18.9"></a-entity>
+      <a-entity text="value: 
+      Perforated Sheet Metal 500mm;
+      color:black; font: dejavu; width:1; wrapCount:20; letterSpacing: 3" 
+      position = "8 1 -18.9"></a-entity>
+      <a-entity gltf-model="#metal" rotation = "0 90 0" position = "8 3 -18.9"></a-entity>
+      <a-image src="/assets/a-frame/images/tloris6.png" 
+      width="6" height="3.375" position = "3 2.8 -18.9"></a-image>
+      <a-video rotation = "0 -90 0" position = "9.9 3 -5" src="/assets/a-frame/images/video1_muted.mov" geometry = "width:3.6; height:2.025"></a-video>
+
+
+      <!-- MIDDLE WALL -->
+      <a-entity text="value: 
+      Lighing Guerilla;
+      color:white; font: dejavu; width:3; wrapCount:13; letterSpacing: 6" 
+      rotation = "0 180 0" position = "5.7 5 3.7"></a-entity>
+      <a-entity text="value: 
+      Aesthetics could be used to modify architectural object in accordance with contemporary time. 
+      Aesthetics - representation - appearance. With Razac's words: Spectacle is reality, made for a 
+      show and architecture is becoming part of this show. Definition of show is what is generated in 
+      conscious of the subject as a consequence of remake of appearances. The notion of appearance 
+      could be reinterpreted as an element in the process of learning contemporary architecture.;
+            color:white; font: dejavu; width:5.4; wrapCount:125; letterSpacing: 6" 
+      rotation = "0 180 0" position = "5 3.7 3.7"></a-entity>
+      <a-image src="/assets/a-frame/images/IMG_6268 2.jpg" 
+      width="1.5" height="2.25" rotation = "0 180 0" position = "7 2 3.7"></a-image>
+      <a-image src="/assets/a-frame/images/IMG_6314 2.jpg" 
+      width="1.5" height="2.25" rotation = "0 180 0" position = "5 2 3.7"></a-image>
+      <a-image src="/assets/a-frame/images/IMG_6343 2.jpg" 
+      width="1.5" height="2.25" rotation = "0 180 0" position = "3 2 3.7"></a-image>
+
+      <a-image src="/assets/a-frame/images/tloris7.png" 
+      width="5" height="3.6" rotation = "0 180 0" position = "3 3 10.9"></a-image>
+      <a-entity text="value: 
+      New school for arhitecture;
+      color:black; font: dejavu; width:1.6; wrapCount:10; letterSpacing: 6" 
+      rotation = "0 180 0" position = "-0.7 3.7 10.9"></a-entity>
+
+      <a-entity text="value: 
+      The omnipresent coherent system is creating the architecture of spectacle that uses numerous 
+      elements of manipulation. Manipulation here means manipulation of Vitruvian sequences as 
+      constitutive parts of the whole but not coherent whole as they are established separately.;
+            color:black; font: dejavu; width:5.4; wrapCount:125; letterSpacing: 6" 
+      rotation = "0 180 0" position = "1 1 10.9"></a-entity>
+
+      <a-image src="/assets/a-frame/images/vzvod plakat-1.png" 
+      width="2" height="4.7" rotation = "0 180 0" position = "-5 3 10.4" opacity = "0.9"></a-image>
+      <a-entity text="value: 
+      Vzvod;
+      color:white; font: dejavu; width:1.6; wrapCount:10; letterSpacing: 6" 
+      rotation = "0 180 0" position = "-3.3 3.7 10.4"></a-entity>
+      <a-entity text="value: 
+      Projekt se ukvarja z udejstovanjem aktivnih v kulturi - kulturni zavodi, Kino Siska, drustvo Pekinpah, Metelkova mesto.;
+      color:white; font: dejavu; width:1.6; wrapCount:20; letterSpacing: 6" 
+      rotation = "0 180 0" position = "-3.3 2.3 10.4"></a-entity>
+      <a-entity text="value: 
+      Projekt se ukvarja z udejstvovanjem aktivnih v kulturi, pri čemer raziskuje analogije med strukturo delovanja kulturnih organizacij (samih zase) in njihovim učinkovanjem pri soustvarjanju identitete kraja. Kulturne organizacije so pomemben gradnik urbane kulture: kot protiutež tisti drugosti (masovni kulturi). Vzvod je rezultat raziskovanja oblik urbanosti, ki je prisotna v različnih merilih in se artikulira na različne načine. Namen projekta je izpostavljanje pomankljivosti v procesu nastajanja mestnih območij, mestnih prostorov tiste popularne urbanosti, ki ji je umetniška produkcija - kot pozitivna drugost odvzeta. Je preizkus gledanja v (uspešno) utopijo -načrtovanih- prostorov. kateri z delovanjem, posledicami omogočajo. usmerjajo kako dogajanje. dejavnost. 
+      ekspr.. s prilastkom kar z delovanjem. posledicami omogoča. zavira. usmerja kako dogajanje. dejavnost: dobiček. cena in drugi ekonomski vzvodi. vzvodi napredka / ključni vzvodi družbe' 
+      ;color:white; font: dejavu; width:2.7; wrapCount:40; letterSpacing: 6" 
+      rotation = "0 180 0" position = "-8 3 10.4"></a-entity>
+      <a-image src="/assets/a-frame/images/tloris8.png" 
+      width="3" height="1.7" rotation = "0 90 0" position = "-9.4 4.6 8.2" opacity = "0.9"></a-image>
+      <a-image src="/assets/a-frame/images/tloris9.png" 
+      width="3" height="1.7" rotation = "0 90 0" position = "-9.4 2.8 7.5" opacity = "0.9"></a-image>
+      <a-image src="/assets/a-frame/images/tloris10.png" 
+      width="3" height="1.7" rotation = "0 90 0" position = "-9.4 1 8.2" opacity = "0.9"></a-image>
+      <a-entity text="value: 
+      1. SANITARNA JEDRA in KAVARNA;
+            color:white; font: dejavu; width:1; wrapCount:10; letterSpacing: 6" 
+      rotation = "0 90 0" position = "-9.4 4.8 6"></a-entity>
+      <a-entity text="value: 
+      2. PRODUKCIJSKI PROSTORI;
+            color:white; font: dejavu; width:1; wrapCount:10; letterSpacing: 6" 
+      rotation = "0 90 0" position = "-9.4 3.2 5.3"></a-entity>
+      <a-entity text="value: 
+      3. RAZSTAVNI PROSTORI;
+            color:white; font: dejavu; width:1; wrapCount:10; letterSpacing: 6" 
+      rotation = "0 90 0" position = "-9.4 1.3 6"></a-entity>
+      <a-image src="/assets/a-frame/images/tloris11.png" 
+      width="3" height="3.5" rotation = "0 90 0" position = "-9.4 3 2.7" opacity = "0.9"></a-image>
+      <a-entity text="value: 
+      Situacija;
+      color:white; font: dejavu; width:1; wrapCount:12; letterSpacing: 6" 
+      rotation = "0 90 0" position = "-9.4 1.3 2.7"></a-entity>
+
+      <a-entity text="value: 
+      Use AWSD keys to move, or gaze at circles on the ground to move on mobile.;
+      color:#8f8f8f; font: dejavu; width:2; wrapCount:20; letterSpacing: 6" 
+      rotation = "-90 0 0" position = "0 0.2 -1.5"></a-entity>
 
       <!-- TELEPORT POINTS -->
       <a-box teleport_point position = "0 0.001 0" material = "opacity: 0">
@@ -166,7 +316,9 @@
       <a-box teleport_point position = "-6 0.001 -15" material = "opacity: 0">
         <a-ring color="#707070" radius-inner="0.4" radius-outer="0.5" rotation = "-90 0 0"  material = "opacity: 0.5"></a-ring>
         </a-box>
-        
+      <a-box teleport_point position = "0 0.001 -17" material = "opacity: 0">
+        <a-ring color="#707070" radius-inner="0.4" radius-outer="0.5" rotation = "-90 0 0"  material = "opacity: 0.5"></a-ring>
+        </a-box>
     </a-scene>
     <script>
       // On mobile remove elements that are resource heavy

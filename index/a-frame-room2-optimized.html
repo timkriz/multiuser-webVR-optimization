@@ -22,7 +22,7 @@
 				var cubes = []
 				var geo = new THREE.BoxBufferGeometry( 0.1, 0.1, 0.1 );
 
-				for ( var i = 0; i < 1000; i ++ ) {
+				for ( var i = 0; i <1000; i ++ ) {
 					var geometry = geo.clone() // clone geometry
 					geometry.rotateY(Math.random()*Math.PI*2);
 					geometry.applyMatrix( new THREE.Matrix4().makeTranslation(generateRand(-2, 2), generateRand(0, 4), generateRand(-3, -7)));
