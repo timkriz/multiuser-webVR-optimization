@@ -13,9 +13,19 @@ A-Frame spletne strani za izvedbo testiranja "ozkih grl":
       * scena z zapečenimi teksturami in _THREE.MeshBasicMaterial_
 4. Optimizacija omrežne arhitekture 
       * scena z socket.io WebSockets API
-      * scena z WebRTC 
+      * scena z WebRTC
+      
+Implementacija socket.io in WebRTC z [networked-aframe](https://github.com/networked-aframe/networked-aframe).
      
-# Namestitev
+## Namestitev
 
-`$ git clone https://github.com/libgit2/libgit2`
-# Glitch gostovanje
+`$ git clone https://github.com/timkriz/multiuser-webVR-optimization.git`
+
+`$ npm start`
+
+`https://localhost:8080`
+
+## Gostovana aplikacija
+
+1. https://blue-perfect-sailboat.glitch.me/
+2. https://lively-ablaze-flute.glitch.me/ (kopija)
