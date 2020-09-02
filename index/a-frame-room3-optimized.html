@@ -5,6 +5,7 @@
     <script src="js/aframe.min.js"></script> <!-- A - frame -->
   	<script src="js/measure_fps.js"></script> <!-- Script for measuring average FPS -->
     <script src="js/components/lambert.js"></script> <!-- Lambet material component -->
+    <script src="js/fps_in_VR.js"></script> <!-- Show fps also in VR mode -->
   </head>
   <body>
     <!--MEASURE FPS BUTTON-->
@@ -53,6 +54,8 @@
     
       <a-cylinder position="5 0.1 -13" radius="3" height="0.2" color="#666666"></a-cylinder> <!--  1. pedestal -->
       <a-cylinder position="-6 0.1 -8" radius="2" height="0.2" color="#666666"></a-cylinder> <!--  2. pedestal -->
+    
+      <a-entity fps-counter position="2 0.2 -2" scale = "3 3 3"></a-entity>
     </a-scene>
   </body>
 </html>
