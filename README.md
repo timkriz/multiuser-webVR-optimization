@@ -13,7 +13,7 @@ A-Frame spletne strani za izvedbo testiranja "ozkih grl":
       * scena z zapečenimi teksturami in _THREE.MeshBasicMaterial_
 4. Optimizacija omrežne arhitekture 
       * scena z socket.io WebSockets API
-      * scena z WebRTC
+      * scena z WebRTC arhitekturo
       
 Implementacija socket.io in WebRTC z [networked-aframe](https://github.com/networked-aframe/networked-aframe).
      
