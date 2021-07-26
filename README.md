@@ -1,7 +1,8 @@
-# Multiuser webVR optimization experiments
+# Multiuser WebVR optimization experiments
 
+Repozitorij vsebuje eksperimentalni del diplomske naloge z naslovom "Večuporabniške spletne aplikacije v navidezni resničnosti". Raziskovana je navidezna resničnost, ki temelji na spletnih tehnologijah (WebVR) v kontekstu večuporabniških interaktivnih okoljih na primeru interaktivnega portfolia. Naslovijo se vplivi kompleksne geometrije, števila klicev za izris na grafični procesor, vrste senčenja in omrežnearhitekture aplikacije knjižnice A-Frame/ Three.js na več napravah (mobilnih, računalniku, očalih za navidezno resničnost). 
 
-A-Frame spletne strani za izvedbo testiranja "ozkih grl":
+Podstrani za izvedbo testiranja "ozkih grl":
 1. Optimizacija geometrije modela:
       * 3D model s 75k trikotniki
       * 3D model z 862 trikotniki
@@ -16,16 +17,22 @@ A-Frame spletne strani za izvedbo testiranja "ozkih grl":
       * scena z WebRTC arhitekturo
       
 Implementacija socket.io in WebRTC z [networked-aframe](https://github.com/networked-aframe/networked-aframe).
+
+<p align="center"><img src="https://github.com/timkriz/multiuser-webVR-optimization/blob/master/Artboard%201.png" width="600"></p>
+
+<p align="center"><img src="https://github.com/timkriz/multiuser-webVR-optimization/blob/master/popravljen.png" width="300"></p>
      
 ## Namestitev
 
 `$ git clone https://github.com/timkriz/multiuser-webVR-optimization.git`
 
-`$ npm start`
+```
+npm install
+npm start
+```
 
 `https://localhost:8080`
 
 ## Gostovana aplikacija
 
-1. https://blue-perfect-sailboat.glitch.me
-2. https://lively-ablaze-flute.glitch.me (kopija)
+https://lively-ablaze-flute.glitch.me
